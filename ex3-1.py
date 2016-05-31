@@ -1,7 +1,6 @@
 from enum import Enum
 
 
-@staticmethod
 class Color:
     yellow = '\033[93m'
     blue = '\033[94m'
@@ -115,13 +114,42 @@ class Memory:
         pass
 
 
+def instroduce():
+    print('请选择你要的操作')
+    print('1 FF_insert')
+    print('2 BF_insert')
+    print('3 WF_insert')
+    print('4 recycle')
+    print('5 display tasks list')
+    print('6 exit')
+
+
 if __name__ == '__main__':
-    x = Memory(20)
-    x.ff_insert(3)
-    x.ff_insert(5)
-    x.ff_insert(8)
-    x.disp_proc()
-    x.recycle(1)
-    x.disp_proc()
-    x.bf_insert(2)
-    x.disp_proc()
+    size = input('请输入存储总空间:')
+    x = Memory(int(size))
+    while 1 :
+        instroduce()
+        choice = int(input('请选择:'))
+        if choice == 1:
+            size = int(input('Enter Progress Size:'))
+            x.ff_insert(size)
+
+        elif choice == 2:
+            size = int(input('Enter Progress Size:'))
+            x.bf_insert(size)
+
+        elif choice == 3:
+            size = int(input('Enter Progress Size:'))
+            x.wf_insert(size)
+
+        elif choice == 4:
+            size = int(input('Enter Progress Code:'))
+            x.recycle(size)
+        elif choice == 5:
+            x.disp_proc()
+
+        elif choice == 6:
+            exit()
+        else:
+            print("Command Error")
+
