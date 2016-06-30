@@ -32,7 +32,7 @@ class CheckPoint:
         return self.size < other.size
 
     def __repr__(self):
-        return "Checkpoint{} len:{}|".format(self.start, self.size)
+        return "Checkpoint {} len:{}|".format(self.start, self.size)
 
 
 class Memory:
@@ -59,7 +59,7 @@ class Memory:
                 free_len += 1
             if self.memory[i] == Status.busy or i == self.maxsize - 1:
                 if free_len >= size:
-                    checkpoints.append(CheckPoint(i - size, free_len))
+                    checkpoints.append(CheckPoint(i - free_len + 2, free_len))
                     free_len = 0
         return checkpoints
 
@@ -127,7 +127,7 @@ def instroduce():
 if __name__ == '__main__':
     size = input('请输入存储总空间:')
     x = Memory(int(size))
-    while 1 :
+    while 1:
         instroduce()
         choice = int(input('请选择:'))
         if choice == 1:
