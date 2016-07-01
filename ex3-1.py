@@ -64,8 +64,12 @@ class Memory:
         return checkpoints
 
     def recycle(self, proc_code):
-        start = self.tasklist[proc_code].start
-        end = self.tasklist[proc_code].size + start
+        try:
+            start = self.tasklist[proc_code].start
+            end = self.tasklist[proc_code].size + start
+        except IndexError:
+            print("\nWarning:No such proccess!\n")
+            return
         self.tasklist[proc_code].status = Status.free
         for i in range(start, end):
             self.memory[i] = Status.free
@@ -110,8 +114,9 @@ class Memory:
                                                                  self.tasklist[i].status))
         print(Color.end)
 
-    def disp_mem(self):
-        pass
+    def custom_proc(self, start, size):
+        self.set_memory(start,size,Status.busy)
+        self.tasklist.append(Progress(start, size))
 
 
 def instroduce():
@@ -127,29 +132,34 @@ def instroduce():
 if __name__ == '__main__':
     size = input('请输入存储总空间:')
     x = Memory(int(size))
+    print('数据初始化阶段,输入exit退出。')
+    print('输入格式 开始点 空间大小')
+    while 1:
+        i = input('开始点:\n')
+        if i == 'exit':
+            break
+        y = input('占用空间:\n')
+        x.custom_proc(int(i), int(y))
+        print('success!')
     while 1:
         instroduce()
         choice = int(input('请选择:'))
-        if choice == 1:
-            size = int(input('Enter Progress Size:'))
-            x.ff_insert(size)
 
-        elif choice == 2:
-            size = int(input('Enter Progress Size:'))
-            x.bf_insert(size)
-
-        elif choice == 3:
-            size = int(input('Enter Progress Size:'))
-            x.wf_insert(size)
-
-        elif choice == 4:
+        if choice == 4:
             size = int(input('Enter Progress Code:'))
             x.recycle(size)
         elif choice == 5:
             x.disp_proc()
-
         elif choice == 6:
             exit()
         else:
-            print("Command Error")
+            size = int(input('Enter Progress Size:'))
+            if choice == 1:
+                x.ff_insert(size)
+            elif choice == 2:
+                x.bf_insert(size)
+            elif choice == 3:
+                x.wf_insert(size)
+            else:
+                print("Command Error")
 
