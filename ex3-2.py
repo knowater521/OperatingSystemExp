@@ -63,7 +63,7 @@ class MemoryPage:
             return Result.repace
         else:
             self.move_pointer()
-            self.get(page)
+            return self.get(page)
 
     def disp(self):
 
@@ -92,3 +92,4 @@ if __name__ == '__main__':
             y.disp()
         else:
             print('\033[94m' + str(y.get(int(inp))) + '\033[0m')
+
